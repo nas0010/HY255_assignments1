@@ -1,0 +1,104 @@
+Nasia Boubouraki csd4692  
+
+
+ 0x8049db5 <readString>:      push   %ebp          #store ebp in stack
+   0x8049db6 <readString+1>:    mov    %esp,%ebp        #ebp=exp
+   0x8049db8 <readString+3>:    sub    $0x38,%esp       #alloc space for i
+   0x8049dbb <readString+6>:    movl   $0x0,-0xc(%ebp)
+   0x8049dc2 <readString+13>:   mov    0x80e3434,%eax       #i=0
+   0x8049dc7 <readString+18>:   sub    $0xc,%esp 
+   0x8049dca <readString+21>:   push   %eax               #copy ra
+   0x8049dcb <readString+22>:   call   0x8059cd0 <getc>         #store ra
+   0x8049dd0 <readString+27>:   add    $0x10,%esp         #fgetc 
+   0x8049dd3 <readString+30>:   mov    %eax,-0x10(%ebp)
+   0x8049dd6 <readString+33>:   cmpl   $0xffffffff,-0x10(%ebp)       #c=char
+   0x8049dda <readString+37>:   je     0x8049df4 <readString+63>       #if(c==EOF)
+   0x8049ddc <readString+39>:   cmpl   $0xa,-0x10(%ebp)           #break
+   0x8049de0 <readString+43>:   je     0x8049df4 <readString+63>      #if c== '\n'
+   0x8049de2 <readString+45>:   mov    -0xc(%ebp),%eax           #break
+   0x8049de5 <readString+48>:   lea    0x1(%eax),%edx
+   0x8049de8 <readString+51>:   mov    %edx,-0xc(%ebp)	#copy i to eax
+   0x8049deb <readString+54>:   mov    -0x10(%ebp),%edx      #copy c to edx 
+   0x8049dee <readString+57>:   mov    %dl,-0x2e(%ebp,%eax,1)          #buf[i]=c
+   0x8049df2 <readString+61>:   jmp    0x8049dc2 <readString+13>   #go to next char
+   0x8049df4 <readString+63>:   lea    -0x2e(%ebp),%edx
+   0x8049df7 <readString+66>:   mov    -0xc(%ebp),%eax
+   0x8049dfa <readString+69>:   add    %edx,%eax		#copy i to eax
+   0x8049dfc <readString+71>:   movb   $0x0,(%eax)			#buf[i]=0
+   0x8049dff <readString+74>:   movl   $0x0,-0xc(%ebp)			#i=0
+   0x8049e06 <readString+81>:   jmp    0x8049e21 <readString+108>
+   0x8049e08 <readString+83>:   mov    -0xc(%ebp),%edx       #to compare i in for 
+   0x8049e0b <readString+86>:   mov    0x8(%ebp),%eax     #copu
+   0x8049e0e <readString+89>:   add    %eax,%edx             #i
+   0x8049e10 <readString+91>:   lea    -0x2e(%ebp),%ecx
+   0x8049e13 <readString+94>:   mov    -0xc(%ebp),%eax
+   0x8049e16 <readString+97>:   add    %ecx,%eax
+   0x8049e18 <readString+99>:   movzbl (%eax),%eax      #s[i]=buf[i]
+   0x8049e1b <readString+102>:  mov    %al,(%edx)
+   0x8049e1d <readString+104>:  addl   $0x1,-0xc(%ebp)
+   0x8049e21 <readString+108>:  cmpl   $0x1d,-0xc(%ebp)       #if i<=29
+   0x8049e25 <readString+112>:  jle    0x8049e08 <readString+83>        #jump to loop
+   0x8049e27 <readString+114>:  nop
+   0x8049e28 <readString+115>:  leave
+   0x8049e29 <readString+116>:  ret
+  
+
+
+(gdb) print &grade
+$1 = 0x80e3068 <grade> "3"
+(gdb) print grade
+$2 = 51 '3'
+
+Afou to data section periexei mono tis global arxikopoihmenes metablhtes auto 
+shmainei blepwntas to hello.c oti tha periexei mono thn grade kia pragmati
+sthn diefthunsh 0x80e3068 exei thn timh 3 h 51 se ascii.
+
+************************
+|0x80e3068|grade=3(51) |
+************************
+
+(gdb) print &Name
+$3 = (char (*)[30]) 0x80e42dc <Name>
+
+To bss section twra periexei tis global mh arxikopoihmenes metablhtes kai ara ton 
+pinaka Name opws blepoume sto hello.c. Ara to section afto tha einai ths morfhs
+
+****************************
+|0x80e42dc |(arxh tou Name)|
+.
+.
+.
+|0x80e4305 |(telos tou Name)|
+****************************
+
+(gdb) print $esp
+$4 = (void *) 0xbffff460
+(gdb) print $ebp
+$5 = (void *) 0xbffff498
+x/57b $esp
+0xbffff460:     0xc0    0x31    0x0e    0x08    0x0a    0x00    0x00    0x00
+0xbffff468:     0x12    0x00    0x4e    0x61    0x73    0x69    0x61    0x20
+0xbffff470:     0x42    0x6f    0x75    0x62    0x6f    0x75    0x72    0x61
+0xbffff478:     0x6b    0x69    0x00    0x08    0x30    0x34    0x0e    0x08
+0xbffff480:     0x01    0x00    0x00    0x00    0x74    0xf5    0xff    0xbf
+0xbffff488:     0x0a    0x00    0x00    0x00    0x16    0x00    0x00    0x00
+0xbffff490:     0x00    0x30    0x0e    0x08    0xe8    0x81    0x04    0x08
+0xbffff498:     0xb84
+
+			
+****************************
+|0xbffff460|     &esp      |
+|0xbffff46a|     buff[0]   |
+.
+.
+.
+|0xbffff487|     buff[29]  |
+|0xbffff488|      c=10     |
+|0xbffff48c|     i=22      |
+|0xbffff498|     &ebp      |
+|0xbffff49c|      ra       |
+****************************
+
+				
+
+
